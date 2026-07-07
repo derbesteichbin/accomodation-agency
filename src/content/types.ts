@@ -6,7 +6,7 @@ export type Testimonial = { quote: string; author: string; role?: string };
 export type SiteContent = {
   businessName: string;
   tagline: string;
-  bookingUrl: string;
+  bookingCalLink: string;
   contactEmail: string;
   nav: NavItem[];
   hero: { heading: string; subheading: string; image: Img };

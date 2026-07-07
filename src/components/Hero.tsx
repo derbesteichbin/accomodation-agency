@@ -1,4 +1,5 @@
 import type { SiteContent } from "@/content/types";
+import { BookButton } from "@/components/BookButton";
 
 export function Hero({ content }: { content: SiteContent }) {
   return (
@@ -12,12 +13,12 @@ export function Hero({ content }: { content: SiteContent }) {
       <p className="mt-6 max-w-xl text-lg text-stonewarm">
         {content.hero.subheading}
       </p>
-      <a
-        href={content.bookingUrl}
-        className="mt-9 inline-block rounded-full bg-clay px-7 py-3 text-sm font-medium text-cream transition-colors hover:bg-clay-dark"
+      <BookButton
+        calLink={content.bookingCalLink}
+        className="mt-9 inline-block cursor-pointer rounded-full bg-clay px-7 py-3 text-sm font-medium text-cream transition-colors hover:bg-clay-dark"
       >
         Book now
-      </a>
+      </BookButton>
     </section>
   );
 }

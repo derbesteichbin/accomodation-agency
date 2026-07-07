@@ -3,7 +3,7 @@ import type { SiteContent } from "@/content/types";
 export const siteContent: SiteContent = {
   businessName: "Client Business Name",
   tagline: "Short tagline goes here",
-  bookingUrl: "https://cal.com/your-handle",
+  bookingCalLink: "your-handle/shooting-termin",
   contactEmail: "hello@example.com",
   nav: [
     { label: "Portfolio", href: "#portfolio" },
