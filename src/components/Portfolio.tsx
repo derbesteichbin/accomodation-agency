@@ -8,7 +8,9 @@ export function Portfolio({ content }: { content: SiteContent }) {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {content.gallery.map((img, i) => (
             <div key={i} className="aspect-[4/3] overflow-hidden rounded-2xl bg-sand">
-              <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
+              {img.src && (
+                <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
+              )}
             </div>
           ))}
         </div>
