@@ -10,6 +10,18 @@
   --color-stonewarm: #6b6157;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-cream: #1c1917;
+  --color-sand: #262220;
+  --color-line: #3a3330;
+  --color-clay: #d98a68;
+  --color-clay-dark: #c47452;
+  --color-bark: #f5f0ea;
+  --color-stonewarm: #a8a09a;
+}
+
 html {
   scroll-behavior: smooth;
 }

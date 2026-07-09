@@ -14,8 +14,8 @@ export function Packages({ content }: { content: SiteContent }) {
               key={i}
               className={
                 pkg.featured
-                  ? "flex flex-col rounded-3xl border-2 border-clay bg-white p-8"
-                  : "flex flex-col rounded-3xl border border-line bg-white p-8"
+                  ? "flex flex-col rounded-3xl border-2 border-clay bg-sand p-8"
+                  : "flex flex-col rounded-3xl border border-line bg-sand p-8"
               }
             >
               {pkg.featured && (

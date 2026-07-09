@@ -20,6 +20,7 @@ export function LanguageSwitcher({ current }: { current: string }) {
           {i > 0 && <span className="text-line">/</span>}
           <Link
             href={pathFor(l)}
+            prefetch={true}
             aria-current={l === current ? "true" : undefined}
             className={
               l === current

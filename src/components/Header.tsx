@@ -1,6 +1,7 @@
 import type { SiteContent } from "@/content/types";
 import { BookButton } from "@/components/BookButton";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header({ content }: { content: SiteContent }) {
   return (
@@ -20,6 +21,7 @@ export function Header({ content }: { content: SiteContent }) {
             ))}
           </ul>
           <LanguageSwitcher current={content.locale} />
+          <ThemeToggle />
           <BookButton
             calLink={content.bookingCalLink}
             className="cursor-pointer rounded-full bg-clay px-5 py-2 text-sm font-medium text-cream transition-colors hover:bg-clay-dark"
