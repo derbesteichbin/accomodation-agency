@@ -8,8 +8,9 @@ import { Testimonials } from "@/components/Testimonials";
 import { About } from "@/components/About";
 import { Footer } from "@/components/Footer";
 
-export default async function Home() {
-  const content = await getContent();
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const content = await getContent(locale);
   return (
     <>
       <Header content={content} />

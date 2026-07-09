@@ -6,7 +6,7 @@ export const siteSettings = defineType({
   type: "document",
   fields: [
     defineField({ name: "businessName", title: "Business name", type: "string" }),
-    defineField({ name: "tagline", title: "Tagline", type: "string" }),
+    defineField({ name: "tagline", title: "Tagline", type: "localeString" }),
     defineField({ name: "bookingCalLink", title: "Cal.com link (handle/event-slug)", type: "string" }),
     defineField({ name: "contactEmail", title: "Contact email", type: "string" }),
     defineField({
@@ -17,7 +17,7 @@ export const siteSettings = defineType({
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "label", title: "Label", type: "string" }),
+            defineField({ name: "label", title: "Label", type: "localeString" }),
             defineField({ name: "href", title: "Link (e.g. #portfolio)", type: "string" }),
           ],
         }),
@@ -28,8 +28,8 @@ export const siteSettings = defineType({
       title: "Hero section",
       type: "object",
       fields: [
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "subheading", title: "Subheading", type: "text", rows: 3 }),
+        defineField({ name: "heading", title: "Heading", type: "localeString" }),
+        defineField({ name: "subheading", title: "Subheading", type: "localeText" }),
         defineField({
           name: "image",
           title: "Image",
@@ -47,8 +47,8 @@ export const siteSettings = defineType({
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "title", title: "Title", type: "string" }),
-            defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
+            defineField({ name: "title", title: "Title", type: "localeString" }),
+            defineField({ name: "description", title: "Description", type: "localeText" }),
           ],
         }),
       ],
@@ -61,19 +61,18 @@ export const siteSettings = defineType({
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "name", title: "Package name", type: "string" }),
+            defineField({ name: "name", title: "Package name", type: "localeString" }),
             defineField({ name: "price", title: "Price (e.g. 490 EUR)", type: "string" }),
-            defineField({ name: "description", title: "Short description", type: "text", rows: 2 }),
+            defineField({ name: "description", title: "Short description", type: "localeText" }),
             defineField({
               name: "features",
               title: "What's included",
-              type: "array",
-              of: [defineArrayMember({ type: "string" })],
+              type: "localeStringArray",
             }),
             defineField({ name: "featured", title: "Highlight this package", type: "boolean", initialValue: false }),
           ],
           preview: {
-            select: { title: "name", subtitle: "price" },
+            select: { title: "name.de", subtitle: "price" },
           },
         }),
       ],
@@ -98,9 +97,9 @@ export const siteSettings = defineType({
         defineArrayMember({
           type: "object",
           fields: [
-            defineField({ name: "quote", title: "Quote", type: "text", rows: 3 }),
+            defineField({ name: "quote", title: "Quote", type: "localeText" }),
             defineField({ name: "author", title: "Author", type: "string" }),
-            defineField({ name: "role", title: "Role (optional)", type: "string" }),
+            defineField({ name: "role", title: "Role (optional)", type: "localeString" }),
           ],
         }),
       ],
@@ -110,8 +109,8 @@ export const siteSettings = defineType({
       title: "About section",
       type: "object",
       fields: [
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({ name: "body", title: "Body", type: "text", rows: 5 }),
+        defineField({ name: "heading", title: "Heading", type: "localeString" }),
+        defineField({ name: "body", title: "Body", type: "localeText" }),
         defineField({
           name: "image",
           title: "Image",

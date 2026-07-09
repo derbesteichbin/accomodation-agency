@@ -7,7 +7,7 @@ export function Packages({ content }: { content: SiteContent }) {
   return (
     <section id="packages" className="scroll-mt-24 border-t border-line py-24">
       <div className="mx-auto max-w-5xl px-6">
-        <h2 className="text-3xl font-semibold sm:text-4xl">Pakete</h2>
+        <h2 className="text-3xl font-semibold sm:text-4xl">{content.ui.packages}</h2>
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
           {content.packages.map((pkg, i) => (
             <div
@@ -20,7 +20,7 @@ export function Packages({ content }: { content: SiteContent }) {
             >
               {pkg.featured && (
                 <span className="mb-4 self-start rounded-full bg-clay px-3 py-1 text-xs font-medium uppercase tracking-wide text-cream">
-                  Beliebt
+                  {content.ui.popular}
                 </span>
               )}
               <h3 className="text-xl font-semibold">{pkg.name}</h3>
@@ -44,7 +44,7 @@ export function Packages({ content }: { content: SiteContent }) {
                     : "mt-8 w-full cursor-pointer rounded-full border border-line px-6 py-3 text-sm font-medium text-bark transition-colors hover:border-clay hover:text-clay"
                 }
               >
-                Jetzt buchen
+                {content.ui.book}
               </BookButton>
             </div>
           ))}
