@@ -54,6 +54,31 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: "packages",
+      title: "Packages / Pricing",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Package name", type: "string" }),
+            defineField({ name: "price", title: "Price (e.g. 490 EUR)", type: "string" }),
+            defineField({ name: "description", title: "Short description", type: "text", rows: 2 }),
+            defineField({
+              name: "features",
+              title: "What's included",
+              type: "array",
+              of: [defineArrayMember({ type: "string" })],
+            }),
+            defineField({ name: "featured", title: "Highlight this package", type: "boolean", initialValue: false }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "price" },
+          },
+        }),
+      ],
+    }),
+    defineField({
       name: "gallery",
       title: "Portfolio gallery",
       type: "array",

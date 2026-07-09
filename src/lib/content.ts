@@ -7,6 +7,7 @@ const QUERY = `*[_type == "siteSettings"][0]{
   nav[]{label, href},
   hero{heading, subheading, image},
   services[]{title, description},
+  packages[]{name, price, description, features, featured},
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image}
@@ -39,6 +40,14 @@ export async function getContent(): Promise<SiteContent> {
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     services: (data.services ?? []).map((s: any) => ({ title: s.title, description: s.description })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    packages: (data.packages ?? []).map((p: any) => ({
+      name: p.name ?? "",
+      price: p.price ?? "",
+      description: p.description ?? "",
+      features: p.features ?? [],
+      featured: p.featured ?? false,
+    })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gallery: (data.gallery ?? []).filter((g: any) => g?.asset).map((g: any) => img(g)),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
