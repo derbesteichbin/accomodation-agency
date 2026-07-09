@@ -23,6 +23,8 @@ export type SiteContent = {
   gallery: Img[];
   testimonials: Testimonial[];
   about: { heading: string; body: string; image: Img };
+  impressum: string;
+  privacy: string;
   locale: string;
-  ui: { packages: string; popular: string; book: string; testimonials: string; portfolio: string };
+  ui: { packages: string; popular: string; book: string; testimonials: string; portfolio: string; imprint: string; privacy: string };
 };

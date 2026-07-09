@@ -120,6 +120,8 @@ export const siteSettings = defineType({
         }),
       ],
     }),
+    defineField({ name: "impressum", title: "Impressum (legal notice)", type: "localeText" }),
+    defineField({ name: "privacy", title: "Datenschutzerklärung (privacy policy)", type: "localeText" }),
   ],
   preview: {
     prepare() {

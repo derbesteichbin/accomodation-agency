@@ -8,6 +8,10 @@ export function Footer({ content }: { content: SiteContent }) {
         <a href={`mailto:${content.contactEmail}`} className="transition-colors hover:text-clay">
           {content.contactEmail}
         </a>
+        <div className="mt-2 flex gap-4">
+          <a href={`/${content.locale}/impressum`} className="transition-colors hover:text-clay">{content.ui.imprint}</a>
+          <a href={`/${content.locale}/datenschutz`} className="transition-colors hover:text-clay">{content.ui.privacy}</a>
+        </div>
       </div>
     </footer>
   );

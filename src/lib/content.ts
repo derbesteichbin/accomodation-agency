@@ -11,7 +11,8 @@ const QUERY = `*[_type == "siteSettings"][0]{
   packages[]{name, price, description, features, featured},
   gallery[],
   testimonials[]{quote, author, role},
-  about{heading, body, image}
+  about{heading, body, image},
+  impressum, privacy
 }`;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,6 +73,8 @@ export async function getContent(locale: string): Promise<SiteContent> {
       body: pick(data.about?.body, locale),
       image: img(data.about?.image),
     },
+    impressum: pick(data.impressum, locale),
+    privacy: pick(data.privacy, locale),
     locale,
     ui: ui[locale as keyof typeof ui] ?? ui.de,
   };
