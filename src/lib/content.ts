@@ -9,6 +9,7 @@ const QUERY = `*[_type == "siteSettings"][0]{
   hero{heading, subheading, image},
   services[]{title, description},
   packageGroups[]{ propertyType, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
+  singleServices[]{ propertyType, items[]{ name, price, description } },
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image},
@@ -70,6 +71,16 @@ export async function getContent(locale: string): Promise<SiteContent> {
           features: pickArr(t.features, locale),
           featured: t.featured ?? false,
         })),
+      })),
+    })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    singleServices: (data.singleServices ?? []).map((g: any) => ({
+      propertyType: g.propertyType === "haus" ? "haus" : "wohnung",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: (g.items ?? []).map((it: any) => ({
+        name: pick(it.name, locale),
+        price: it.price ?? "",
+        description: pick(it.description, locale),
       })),
     })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

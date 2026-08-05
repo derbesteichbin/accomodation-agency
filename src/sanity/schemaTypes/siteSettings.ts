@@ -113,6 +113,48 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: "singleServices",
+      title: "Einzelleistungen",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          title: "Objektart",
+          fields: [
+            defineField({
+              name: "propertyType",
+              title: "Objektart",
+              type: "string",
+              options: { list: [
+                { title: "Wohnung", value: "wohnung" },
+                { title: "Haus", value: "haus" },
+              ] },
+            }),
+            defineField({
+              name: "items",
+              title: "Leistungen",
+              type: "array",
+              of: [
+                defineArrayMember({
+                  type: "object",
+                  fields: [
+                    defineField({ name: "name", title: "Name", type: "localeString" }),
+                    defineField({ name: "price", title: "Preis (z.B. ab 120 EUR)", type: "string" }),
+                    defineField({ name: "description", title: "Kurzbeschreibung", type: "localeText" }),
+                  ],
+                  preview: { select: { title: "name.de", subtitle: "price" } },
+                }),
+              ],
+            }),
+          ],
+          preview: {
+            select: { pt: "propertyType" },
+            prepare({ pt }) { return { title: pt === "haus" ? "Haus" : "Wohnung" }; },
+          },
+        }),
+      ],
+    }),
+    defineField({
       name: "gallery",
       title: "Portfolio gallery",
       type: "array",
