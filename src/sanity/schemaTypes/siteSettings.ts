@@ -155,6 +155,22 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: "addons",
+      title: "Zusatzleistungen",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "name", title: "Name", type: "localeString" }),
+            defineField({ name: "price", title: "Preis (optional)", type: "string" }),
+            defineField({ name: "description", title: "Kurzbeschreibung", type: "localeText" }),
+          ],
+          preview: { select: { title: "name.de", subtitle: "price" } },
+        }),
+      ],
+    }),
+    defineField({
       name: "gallery",
       title: "Portfolio gallery",
       type: "array",

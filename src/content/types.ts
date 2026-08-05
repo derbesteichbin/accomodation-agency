@@ -22,6 +22,8 @@ export type PackageGroup = {
 export type SingleServiceItem = { name: string; price: string; description: string };
 export type SingleServiceGroup = { propertyType: "wohnung" | "haus"; items: SingleServiceItem[] };
 
+export type Addon = { name: string; price: string; description: string };
+
 export type SiteContent = {
   businessName: string;
   tagline: string;
@@ -32,6 +34,7 @@ export type SiteContent = {
   services: Service[];
   packageGroups: PackageGroup[];
   singleServices: SingleServiceGroup[];
+  addons: Addon[];
   gallery: Img[];
   testimonials: Testimonial[];
   about: { heading: string; body: string; image: Img };

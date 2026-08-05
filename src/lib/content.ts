@@ -10,6 +10,7 @@ const QUERY = `*[_type == "siteSettings"][0]{
   services[]{title, description},
   packageGroups[]{ propertyType, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
   singleServices[]{ propertyType, items[]{ name, price, description } },
+  addons[]{ name, price, description },
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image},
@@ -82,6 +83,12 @@ export async function getContent(locale: string): Promise<SiteContent> {
         price: it.price ?? "",
         description: pick(it.description, locale),
       })),
+    })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    addons: (data.addons ?? []).map((a: any) => ({
+      name: pick(a.name, locale),
+      price: a.price ?? "",
+      description: pick(a.description, locale),
     })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gallery: (data.gallery ?? []).filter((g: any) => g?.asset).map((g: any) => img(g)),
