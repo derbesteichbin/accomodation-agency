@@ -8,7 +8,7 @@ const QUERY = `*[_type == "siteSettings"][0]{
   nav[]{label, href},
   hero{heading, subheading, image},
   services[]{title, description},
-  packages[]{name, price, description, features, featured},
+  packageGroups[]{ propertyType, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image},
@@ -57,12 +57,20 @@ export async function getContent(locale: string): Promise<SiteContent> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     services: (data.services ?? []).map((s: any) => ({ title: pick(s.title, locale), description: pick(s.description, locale) })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    packages: (data.packages ?? []).map((p: any) => ({
-      name: pick(p.name, locale),
-      price: p.price ?? "",
-      description: pick(p.description, locale),
-      features: pickArr(p.features, locale),
-      featured: p.featured ?? false,
+    packageGroups: (data.packageGroups ?? []).map((g: any) => ({
+      propertyType: g.propertyType === "haus" ? "haus" : "wohnung",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      categories: (g.categories ?? []).map((c: any) => ({
+        categoryName: pick(c.categoryName, locale),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        tiers: (c.tiers ?? []).map((t: any) => ({
+          name: pick(t.name, locale),
+          price: t.price ?? "",
+          description: pick(t.description, locale),
+          features: pickArr(t.features, locale),
+          featured: t.featured ?? false,
+        })),
+      })),
     })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gallery: (data.gallery ?? []).filter((g: any) => g?.asset).map((g: any) => img(g)),

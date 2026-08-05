@@ -54,25 +54,60 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
-      name: "packages",
-      title: "Packages / Pricing",
+      name: "packageGroups",
+      title: "Pakete",
       type: "array",
       of: [
         defineArrayMember({
           type: "object",
+          title: "Objektart",
           fields: [
-            defineField({ name: "name", title: "Package name", type: "localeString" }),
-            defineField({ name: "price", title: "Price (e.g. 490 EUR)", type: "string" }),
-            defineField({ name: "description", title: "Short description", type: "localeText" }),
             defineField({
-              name: "features",
-              title: "What's included",
-              type: "localeStringArray",
+              name: "propertyType",
+              title: "Objektart",
+              type: "string",
+              options: { list: [
+                { title: "Wohnung", value: "wohnung" },
+                { title: "Haus", value: "haus" },
+              ] },
             }),
-            defineField({ name: "featured", title: "Highlight this package", type: "boolean", initialValue: false }),
+            defineField({
+              name: "categories",
+              title: "Kategorien",
+              type: "array",
+              of: [
+                defineArrayMember({
+                  type: "object",
+                  title: "Kategorie",
+                  fields: [
+                    defineField({ name: "categoryName", title: "Kategoriename", type: "localeString" }),
+                    defineField({
+                      name: "tiers",
+                      title: "Stufen (Basis / Gold / Platin)",
+                      type: "array",
+                      of: [
+                        defineArrayMember({
+                          type: "object",
+                          fields: [
+                            defineField({ name: "name", title: "Stufenname", type: "localeString" }),
+                            defineField({ name: "price", title: "Preis (z.B. 490 EUR)", type: "string" }),
+                            defineField({ name: "description", title: "Kurzbeschreibung", type: "localeText" }),
+                            defineField({ name: "features", title: "Enthalten", type: "localeStringArray" }),
+                            defineField({ name: "featured", title: "Hervorheben", type: "boolean", initialValue: false }),
+                          ],
+                          preview: { select: { title: "name.de", subtitle: "price" } },
+                        }),
+                      ],
+                    }),
+                  ],
+                  preview: { select: { title: "categoryName.de" } },
+                }),
+              ],
+            }),
           ],
           preview: {
-            select: { title: "name.de", subtitle: "price" },
+            select: { pt: "propertyType" },
+            prepare({ pt }) { return { title: pt === "haus" ? "Haus" : "Wohnung" }; },
           },
         }),
       ],

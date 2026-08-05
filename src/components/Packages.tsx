@@ -1,51 +1,92 @@
+"use client";
+
+import { useState } from "react";
 import type { SiteContent } from "@/content/types";
 import { BookButton } from "@/components/BookButton";
 
 export function Packages({ content }: { content: SiteContent }) {
-  if (!content.packages?.length) return null;
+  const groups = content.packageGroups ?? [];
+  const [active, setActive] = useState(0);
+
+  if (!groups.length) return null;
+
+  const labels: Record<string, string> = {
+    wohnung: content.locale === "en" ? "Apartment" : "Wohnung",
+    haus: content.locale === "en" ? "House" : "Haus",
+  };
+
+  const group = groups[active] ?? groups[0];
 
   return (
     <section id="packages" className="scroll-mt-24 border-t border-line py-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-3xl font-semibold sm:text-4xl">{content.ui.packages}</h2>
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
-          {content.packages.map((pkg, i) => (
-            <div
-              key={i}
-              className={
-                pkg.featured
-                  ? "flex flex-col rounded-3xl border-2 border-clay bg-sand p-8"
-                  : "flex flex-col rounded-3xl border border-line bg-sand p-8"
-              }
-            >
-              {pkg.featured && (
-                <span className="mb-4 self-start rounded-full bg-clay px-3 py-1 text-xs font-medium uppercase tracking-wide text-cream">
-                  {content.ui.popular}
-                </span>
-              )}
-              <h3 className="text-xl font-semibold">{pkg.name}</h3>
-              <p className="mt-2 text-3xl font-semibold text-bark">{pkg.price}</p>
-              {pkg.description && (
-                <p className="mt-3 text-sm leading-relaxed text-stonewarm">{pkg.description}</p>
-              )}
-              <ul className="mt-6 flex-1 space-y-3 text-sm">
-                {pkg.features.map((f, j) => (
-                  <li key={j} className="flex gap-3">
-                    <span aria-hidden className="mt-1 text-clay">—</span>
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <BookButton
-                calLink={content.bookingCalLink}
+
+        {groups.length > 1 && (
+          <div className="mt-8 inline-flex rounded-full border border-line p-1">
+            {groups.map((g, i) => (
+              <button
+                key={g.propertyType}
+                onClick={() => setActive(i)}
                 className={
-                  pkg.featured
-                    ? "mt-8 w-full cursor-pointer rounded-full bg-clay px-6 py-3 text-sm font-medium text-cream transition-colors hover:bg-clay-dark"
-                    : "mt-8 w-full cursor-pointer rounded-full border border-line px-6 py-3 text-sm font-medium text-bark transition-colors hover:border-clay hover:text-clay"
+                  i === active
+                    ? "cursor-pointer rounded-full bg-clay px-6 py-2 text-sm font-medium text-cream"
+                    : "cursor-pointer rounded-full px-6 py-2 text-sm font-medium text-stonewarm transition-colors hover:text-clay"
                 }
               >
-                {content.ui.book}
-              </BookButton>
+                {labels[g.propertyType] ?? g.propertyType}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-12 space-y-16">
+          {group.categories.map((cat, ci) => (
+            <div key={ci}>
+              <h3 className="text-xl font-semibold text-bark">{cat.categoryName}</h3>
+              <div className="mt-6 grid gap-8 lg:grid-cols-3">
+                {cat.tiers.map((tier, ti) => (
+                  <div
+                    key={ti}
+                    className={
+                      tier.featured
+                        ? "flex flex-col rounded-3xl border-2 border-clay bg-sand p-8"
+                        : "flex flex-col rounded-3xl border border-line bg-sand p-8"
+                    }
+                  >
+                    {tier.featured && (
+                      <span className="mb-4 self-start rounded-full bg-clay px-3 py-1 text-xs font-medium uppercase tracking-wide text-cream">
+                        {content.ui.popular}
+                      </span>
+                    )}
+                    <h4 className="text-lg font-semibold">{tier.name}</h4>
+                    {tier.price && (
+                      <p className="mt-2 text-3xl font-semibold text-bark">{tier.price}</p>
+                    )}
+                    {tier.description && (
+                      <p className="mt-3 text-sm leading-relaxed text-stonewarm">{tier.description}</p>
+                    )}
+                    <ul className="mt-6 flex-1 space-y-3 text-sm">
+                      {tier.features.map((f, fi) => (
+                        <li key={fi} className="flex gap-3">
+                          <span aria-hidden className="mt-1 text-clay">—</span>
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <BookButton
+                      calLink={content.bookingCalLink}
+                      className={
+                        tier.featured
+                          ? "mt-8 w-full cursor-pointer rounded-full bg-clay px-6 py-3 text-sm font-medium text-cream transition-colors hover:bg-clay-dark"
+                          : "mt-8 w-full cursor-pointer rounded-full border border-line px-6 py-3 text-sm font-medium text-bark transition-colors hover:border-clay hover:text-clay"
+                      }
+                    >
+                      {content.ui.book}
+                    </BookButton>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

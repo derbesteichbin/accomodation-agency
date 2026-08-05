@@ -15,6 +15,7 @@ export function BookButton({
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
+      cal("init", { origin: "https://app.cal.eu" });
       cal("ui", {
         theme: "light",
         styles: { branding: { brandColor: "#bf6a4a" } },

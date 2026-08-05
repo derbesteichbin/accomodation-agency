@@ -3,12 +3,20 @@ export type NavItem = { label: string; href: string };
 export type Service = { title: string; description: string };
 export type Testimonial = { quote: string; author: string; role?: string };
 
-export type Package = {
+export type Tier = {
   name: string;
   price: string;
   description: string;
   features: string[];
   featured: boolean;
+};
+export type PackageCategory = {
+  categoryName: string;
+  tiers: Tier[];
+};
+export type PackageGroup = {
+  propertyType: "wohnung" | "haus";
+  categories: PackageCategory[];
 };
 
 export type SiteContent = {
@@ -19,7 +27,7 @@ export type SiteContent = {
   nav: NavItem[];
   hero: { heading: string; subheading: string; image: Img };
   services: Service[];
-  packages: Package[];
+  packageGroups: PackageGroup[];
   gallery: Img[];
   testimonials: Testimonial[];
   about: { heading: string; body: string; image: Img };
