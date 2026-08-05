@@ -24,6 +24,13 @@ export type SingleServiceGroup = { propertyType: "wohnung" | "haus"; items: Sing
 
 export type Addon = { name: string; price: string; description: string };
 
+export type AboutMe = { heading: string; body: string; image: { src: string; alt: string } };
+export type BenefitItem = { title: string; description: string };
+export type Benefits = { heading: string; items: BenefitItem[] };
+export type HowStep = { title: string; description: string };
+export type HowItWorks = { heading: string; steps: HowStep[] };
+export type Coverage = { heading: string; body: string; areas: string[] };
+
 export type SiteContent = {
   businessName: string;
   tagline: string;
@@ -35,6 +42,10 @@ export type SiteContent = {
   packageGroups: PackageGroup[];
   singleServices: SingleServiceGroup[];
   addons: Addon[];
+  aboutMe: AboutMe;
+  benefits: Benefits;
+  howItWorks: HowItWorks;
+  coverage: Coverage;
   gallery: Img[];
   testimonials: Testimonial[];
   about: { heading: string; body: string; image: Img };

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
+import { getContent } from "@/lib/content";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import "../../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -23,8 +26,9 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   const { locale } = await params;
   if (!locales.includes(locale as (typeof locales)[number])) notFound();
+  const content = await getContent(locale);
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -33,7 +37,9 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} antialiased`}>
+        <Header content={content} />
         {children}
+        <Footer content={content} />
       </body>
     </html>
   );

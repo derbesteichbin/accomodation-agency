@@ -171,6 +171,53 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: "aboutMe",
+      title: "Über mich",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "body", title: "Text", type: "localeText" }),
+        defineField({ name: "image", title: "Bild", type: "image", options: { hotspot: true },
+          fields: [defineField({ name: "alt", title: "Alt-Text", type: "string" })] }),
+      ],
+    }),
+    defineField({
+      name: "benefits",
+      title: "Vorteile (Darum ...)",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "items", title: "Vorteile", type: "array",
+          of: [defineArrayMember({ type: "object", fields: [
+            defineField({ name: "title", title: "Titel", type: "localeString" }),
+            defineField({ name: "description", title: "Beschreibung", type: "localeText" }),
+          ], preview: { select: { title: "title.de" } } })] }),
+      ],
+    }),
+    defineField({
+      name: "howItWorks",
+      title: "So einfach geht's",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "steps", title: "Schritte", type: "array",
+          of: [defineArrayMember({ type: "object", fields: [
+            defineField({ name: "title", title: "Titel", type: "localeString" }),
+            defineField({ name: "description", title: "Beschreibung", type: "localeText" }),
+          ], preview: { select: { title: "title.de" } } })] }),
+      ],
+    }),
+    defineField({
+      name: "coverage",
+      title: "Wo wir tätig sind",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "body", title: "Text", type: "localeText" }),
+        defineField({ name: "areas", title: "Gebiete", type: "localeStringArray" }),
+      ],
+    }),
+    defineField({
       name: "gallery",
       title: "Portfolio gallery",
       type: "array",

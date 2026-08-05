@@ -11,6 +11,10 @@ const QUERY = `*[_type == "siteSettings"][0]{
   packageGroups[]{ propertyType, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
   singleServices[]{ propertyType, items[]{ name, price, description } },
   addons[]{ name, price, description },
+  aboutMe{ heading, body, image },
+  benefits{ heading, items[]{ title, description } },
+  howItWorks{ heading, steps[]{ title, description } },
+  coverage{ heading, body, areas },
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image},
@@ -90,6 +94,26 @@ export async function getContent(locale: string): Promise<SiteContent> {
       price: a.price ?? "",
       description: pick(a.description, locale),
     })),
+    aboutMe: {
+      heading: pick(data.aboutMe?.heading, locale),
+      body: pick(data.aboutMe?.body, locale),
+      image: img(data.aboutMe?.image),
+    },
+    benefits: {
+      heading: pick(data.benefits?.heading, locale),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: (data.benefits?.items ?? []).map((b: any) => ({ title: pick(b.title, locale), description: pick(b.description, locale) })),
+    },
+    howItWorks: {
+      heading: pick(data.howItWorks?.heading, locale),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      steps: (data.howItWorks?.steps ?? []).map((s: any) => ({ title: pick(s.title, locale), description: pick(s.description, locale) })),
+    },
+    coverage: {
+      heading: pick(data.coverage?.heading, locale),
+      body: pick(data.coverage?.body, locale),
+      areas: pickArr(data.coverage?.areas, locale),
+    },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gallery: (data.gallery ?? []).filter((g: any) => g?.asset).map((g: any) => img(g)),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
