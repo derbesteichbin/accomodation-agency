@@ -13,9 +13,9 @@ export function Header({ content }: { content: SiteContent }) {
   const de = l === "de";
 
   const leistungen = [
-    { label: de ? "Pakete" : "Packages", href: `/${l}#packages` },
-    { label: de ? "Einzelleistungen" : "Individual services", href: `/${l}#einzelleistungen` },
-    { label: de ? "Zusatzleistungen" : "Add-ons", href: `/${l}#zusatzleistungen` },
+    { label: de ? "Pakete" : "Packages", href: `/${l}/leistungen#packages` },
+    { label: de ? "Einzelleistungen" : "Individual services", href: `/${l}/leistungen#einzelleistungen` },
+    { label: de ? "Zusatzleistungen" : "Add-ons", href: `/${l}/leistungen#zusatzleistungen` },
   ];
   const ueber = [
     { label: de ? "Über mich" : "About me", href: `/${l}/ueber-uns#ueber-mich` },
@@ -41,9 +41,9 @@ export function Header({ content }: { content: SiteContent }) {
           </Link>
 
           <div className="group relative">
-            <button className="cursor-pointer text-sm text-stonewarm transition-colors hover:text-clay">
+            <Link href={`/${l}/leistungen`} className="cursor-pointer text-sm text-stonewarm transition-colors hover:text-clay">
               {leistungenLabel}
-            </button>
+            </Link>
             <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
               <div className="min-w-48 rounded-2xl border border-line bg-cream p-2 shadow-lg">
                 {leistungen.map((item) => (
