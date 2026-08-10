@@ -71,6 +71,7 @@ export const siteSettings = defineType({
                 { title: "Haus", value: "haus" },
               ] },
             }),
+            defineField({ name: "intro", title: "Beschreibung (unter dem Tab)", type: "localeText" }),
             defineField({
               name: "categories",
               title: "Kategorien",
@@ -139,10 +140,25 @@ export const siteSettings = defineType({
                   type: "object",
                   fields: [
                     defineField({ name: "name", title: "Name", type: "localeString" }),
-                    defineField({ name: "price", title: "Preis (z.B. ab 120 EUR)", type: "string" }),
                     defineField({ name: "description", title: "Kurzbeschreibung", type: "localeText" }),
+                    defineField({
+                      name: "tiers",
+                      title: "Stufen",
+                      type: "array",
+                      of: [
+                        defineArrayMember({
+                          type: "object",
+                          fields: [
+                            defineField({ name: "label", title: "Stufenname (z.B. Basis, Gold, Platin)", type: "localeString" }),
+                            defineField({ name: "price", title: "Preis", type: "string" }),
+                            defineField({ name: "features", title: "Enthalten", type: "localeStringArray" }),
+                          ],
+                          preview: { select: { title: "label.de", subtitle: "price" } },
+                        }),
+                      ],
+                    }),
                   ],
-                  preview: { select: { title: "name.de", subtitle: "price" } },
+                  preview: { select: { title: "name.de" } },
                 }),
               ],
             }),
@@ -215,6 +231,30 @@ export const siteSettings = defineType({
         defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
         defineField({ name: "body", title: "Text", type: "localeText" }),
         defineField({ name: "areas", title: "Gebiete", type: "localeStringArray" }),
+      ],
+    }),
+    defineField({
+      name: "faq",
+      title: "FAQ",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "items", title: "Fragen", type: "array",
+          of: [defineArrayMember({ type: "object", fields: [
+            defineField({ name: "question", title: "Frage", type: "localeString" }),
+            defineField({ name: "answer", title: "Antwort", type: "localeText" }),
+          ], preview: { select: { title: "question.de" } } })] }),
+      ],
+    }),
+    defineField({
+      name: "support",
+      title: "Support / Kontakt",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Überschrift", type: "localeString" }),
+        defineField({ name: "body", title: "Text", type: "localeText" }),
+        defineField({ name: "email", title: "E-Mail", type: "string" }),
+        defineField({ name: "phone", title: "Telefon (optional)", type: "string" }),
       ],
     }),
     defineField({

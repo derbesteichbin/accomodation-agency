@@ -4,6 +4,33 @@ import { useState } from "react";
 import type { SiteContent } from "@/content/types";
 import { BookButton } from "@/components/BookButton";
 
+// Farb-Kennzeichnung der Stufen NACH POSITION (0 = erste Stufe).
+// Hier kannst du Farben jederzeit anpassen. Es sind normale Tailwind-Klassen.
+const TIER_BADGE: { label: string; badge: string }[] = [
+  { label: "text-stonewarm", badge: "bg-line text-bark" },                 // Stufe 1: schlicht
+  { label: "text-amber-700", badge: "bg-amber-200 text-amber-900" },       // Stufe 2: Gold
+  { label: "text-slate-500", badge: "bg-slate-200 text-slate-700" },       // Stufe 3: Platin/Silber
+  { label: "text-clay", badge: "bg-clay text-cream" },                     // Stufe 4: kräftig
+];
+function tierStyle(i: number) {
+  return TIER_BADGE[i] ?? TIER_BADGE[TIER_BADGE.length - 1];
+}
+
+// Liest die erste Fotozahl aus den Features (z.B. "25 professionell bearbeitete Immobilienfotos" -> 25). Sonst null.
+function photoCount(features: string[]): number | null {
+  for (const f of features) {
+    const m = f.match(/(\d+)\s*[^\d]*[Ff]oto/);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
+// Wandelt einen Preis-String wie "€595" oder "595 EUR" in eine Zahl. Sonst null.
+function priceValue(price: string): number | null {
+  const m = price.replace(/\./g, "").match(/(\d+)(?:,(\d+))?/);
+  if (!m) return null;
+  return parseFloat(m[2] ? `${m[1]}.${m[2]}` : m[1]);
+}
+
 export function Packages({ content }: { content: SiteContent }) {
   const groups = content.packageGroups ?? [];
   const [active, setActive] = useState(0);
@@ -40,8 +67,19 @@ export function Packages({ content }: { content: SiteContent }) {
           </div>
         )}
 
+        {group.intro && (
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-stonewarm">{group.intro}</p>
+        )}
+
         <div className="mt-12 space-y-16">
-          {group.categories.map((cat, ci) => (
+          {group.categories.map((cat, ci) => {
+            const perPhoto = cat.tiers.map((t) => {
+              const n = photoCount(t.features);
+              const p = priceValue(t.price);
+              return n && p ? p / n : null;
+            });
+            const baseline = perPhoto[0] ?? null;
+            return (
             <div key={ci}>
               <h3 className="text-xl font-semibold text-bark">{cat.categoryName}</h3>
               <div className="mt-6 grid gap-8 lg:grid-cols-3">
@@ -54,15 +92,30 @@ export function Packages({ content }: { content: SiteContent }) {
                         : "flex flex-col rounded-3xl border border-line bg-sand p-8"
                     }
                   >
-                    {tier.featured && (
-                      <span className="mb-4 self-start rounded-full bg-clay px-3 py-1 text-xs font-medium uppercase tracking-wide text-cream">
-                        {content.ui.popular}
-                      </span>
-                    )}
-                    <h4 className="text-lg font-semibold">{tier.name}</h4>
+                    <div className="mb-4 flex flex-wrap items-center gap-2">
+                      {tier.featured && (
+                        <span className="rounded-full bg-clay px-3 py-1 text-xs font-medium uppercase tracking-wide text-cream">
+                          {content.ui.popular}
+                        </span>
+                      )}
+                      {tier.name && (
+                        <span className={`rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide ${tierStyle(ti).badge}`}>
+                          {tier.name}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className={`text-lg font-semibold ${tierStyle(ti).label}`}>{tier.name}</h4>
                     {tier.price && (
                       <p className="mt-2 text-3xl font-semibold text-bark">{tier.price}</p>
                     )}
+                    {perPhoto[ti] !== null && baseline !== null && perPhoto[ti]! < baseline && (() => {
+                      const save = Math.round((1 - perPhoto[ti]! / baseline) * 100);
+                      return save > 0 ? (
+                        <p className="mt-1 text-xs font-medium text-emerald-600">
+                          −{save}% {content.locale === "en" ? "per photo" : "pro Foto"}
+                        </p>
+                      ) : null;
+                    })()}
                     {tier.description && (
                       <p className="mt-3 text-sm leading-relaxed text-stonewarm">{tier.description}</p>
                     )}
@@ -88,7 +141,8 @@ export function Packages({ content }: { content: SiteContent }) {
                 ))}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

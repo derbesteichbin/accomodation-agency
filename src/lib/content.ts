@@ -8,13 +8,15 @@ const QUERY = `*[_type == "siteSettings"][0]{
   nav[]{label, href},
   hero{heading, subheading, image},
   services[]{title, description},
-  packageGroups[]{ propertyType, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
-  singleServices[]{ propertyType, items[]{ name, price, description } },
+  packageGroups[]{ propertyType, intro, categories[]{ categoryName, tiers[]{ name, price, description, features, featured } } },
+  singleServices[]{ propertyType, items[]{ name, description, tiers[]{ label, price, features } } },
   addons[]{ name, price, description },
   aboutMe{ heading, body, image },
   benefits{ heading, items[]{ title, description } },
   howItWorks{ heading, steps[]{ title, description } },
   coverage{ heading, body, areas },
+  faq{ heading, items[]{ question, answer } },
+  support{ heading, body, email, phone },
   gallery[],
   testimonials[]{quote, author, role},
   about{heading, body, image},
@@ -65,6 +67,7 @@ export async function getContent(locale: string): Promise<SiteContent> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     packageGroups: (data.packageGroups ?? []).map((g: any) => ({
       propertyType: g.propertyType === "haus" ? "haus" : "wohnung",
+      intro: pick(g.intro, locale),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       categories: (g.categories ?? []).map((c: any) => ({
         categoryName: pick(c.categoryName, locale),
@@ -84,8 +87,13 @@ export async function getContent(locale: string): Promise<SiteContent> {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       items: (g.items ?? []).map((it: any) => ({
         name: pick(it.name, locale),
-        price: it.price ?? "",
         description: pick(it.description, locale),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        tiers: (it.tiers ?? []).map((t: any) => ({
+          label: pick(t.label, locale),
+          price: t.price ?? "",
+          features: pickArr(t.features, locale),
+        })),
       })),
     })),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -113,6 +121,17 @@ export async function getContent(locale: string): Promise<SiteContent> {
       heading: pick(data.coverage?.heading, locale),
       body: pick(data.coverage?.body, locale),
       areas: pickArr(data.coverage?.areas, locale),
+    },
+    faq: {
+      heading: pick(data.faq?.heading, locale),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: (data.faq?.items ?? []).map((f: any) => ({ question: pick(f.question, locale), answer: pick(f.answer, locale) })),
+    },
+    support: {
+      heading: pick(data.support?.heading, locale),
+      body: pick(data.support?.body, locale),
+      email: data.support?.email ?? "",
+      phone: data.support?.phone ?? "",
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gallery: (data.gallery ?? []).filter((g: any) => g?.asset).map((g: any) => img(g)),

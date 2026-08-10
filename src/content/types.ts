@@ -16,10 +16,12 @@ export type PackageCategory = {
 };
 export type PackageGroup = {
   propertyType: "wohnung" | "haus";
+  intro: string;
   categories: PackageCategory[];
 };
 
-export type SingleServiceItem = { name: string; price: string; description: string };
+export type SingleTier = { label: string; price: string; features: string[] };
+export type SingleServiceItem = { name: string; description: string; tiers: SingleTier[] };
 export type SingleServiceGroup = { propertyType: "wohnung" | "haus"; items: SingleServiceItem[] };
 
 export type Addon = { name: string; price: string; description: string };
@@ -30,6 +32,9 @@ export type Benefits = { heading: string; items: BenefitItem[] };
 export type HowStep = { title: string; description: string };
 export type HowItWorks = { heading: string; steps: HowStep[] };
 export type Coverage = { heading: string; body: string; areas: string[] };
+export type FaqItem = { question: string; answer: string };
+export type Faq = { heading: string; items: FaqItem[] };
+export type Support = { heading: string; body: string; email: string; phone: string };
 
 export type SiteContent = {
   businessName: string;
@@ -46,6 +51,8 @@ export type SiteContent = {
   benefits: Benefits;
   howItWorks: HowItWorks;
   coverage: Coverage;
+  faq: Faq;
+  support: Support;
   gallery: Img[];
   testimonials: Testimonial[];
   about: { heading: string; body: string; image: Img };
