@@ -32,7 +32,7 @@ export type Benefits = { heading: string; items: BenefitItem[] };
 export type HowStep = { title: string; description: string };
 export type HowItWorks = { heading: string; steps: HowStep[] };
 export type Coverage = { heading: string; body: string; areas: string[] };
-export type FaqItem = { question: string; answer: string };
+export type FaqItem = { question: string; answer: string; showOnHome: boolean };
 export type Faq = { heading: string; items: FaqItem[] };
 export type Support = { heading: string; body: string; email: string; phone: string };
 

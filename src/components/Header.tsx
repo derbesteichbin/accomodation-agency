@@ -22,6 +22,7 @@ export function Header({ content }: { content: SiteContent }) {
     { label: de ? "Vorteile" : "Benefits", href: `/${l}/ueber-uns#vorteile` },
     { label: de ? "So einfach geht's" : "How it works", href: `/${l}/ueber-uns#so-gehts` },
     { label: de ? "Wo wir tätig sind" : "Where we operate", href: `/${l}/ueber-uns#gebiete` },
+    { label: de ? "FAQ" : "FAQ", href: `/${l}/faq` },
   ];
   const leistungenLabel = de ? "Leistungen" : "Services";
   const ueberLabel = de ? "Über uns" : "About";

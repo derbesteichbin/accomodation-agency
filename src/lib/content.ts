@@ -15,7 +15,7 @@ const QUERY = `*[_type == "siteSettings"][0]{
   benefits{ heading, items[]{ title, description } },
   howItWorks{ heading, steps[]{ title, description } },
   coverage{ heading, body, areas },
-  faq{ heading, items[]{ question, answer } },
+  faq{ heading, items[]{ question, answer, showOnHome } },
   support{ heading, body, email, phone },
   gallery[],
   testimonials[]{quote, author, role},
@@ -125,7 +125,7 @@ export async function getContent(locale: string): Promise<SiteContent> {
     faq: {
       heading: pick(data.faq?.heading, locale),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      items: (data.faq?.items ?? []).map((f: any) => ({ question: pick(f.question, locale), answer: pick(f.answer, locale) })),
+      items: (data.faq?.items ?? []).map((f: any) => ({ question: pick(f.question, locale), answer: pick(f.answer, locale), showOnHome: f.showOnHome ?? false })),
     },
     support: {
       heading: pick(data.support?.heading, locale),

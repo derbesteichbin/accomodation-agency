@@ -243,6 +243,7 @@ export const siteSettings = defineType({
           of: [defineArrayMember({ type: "object", fields: [
             defineField({ name: "question", title: "Frage", type: "localeString" }),
             defineField({ name: "answer", title: "Antwort", type: "localeText" }),
+            defineField({ name: "showOnHome", title: "Auf Startseite zeigen", type: "boolean", initialValue: false }),
           ], preview: { select: { title: "question.de" } } })] }),
       ],
     }),

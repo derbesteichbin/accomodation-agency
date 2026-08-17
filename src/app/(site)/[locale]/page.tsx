@@ -13,7 +13,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Hero content={content} />
       <Portfolio content={content} />
       <Testimonials content={content} />
-      <Faq content={content} />
+      <Faq content={content} onlyHome showAllButton />
       <Support content={content} />
     </>
   );
