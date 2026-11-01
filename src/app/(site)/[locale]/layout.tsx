@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
 import { getContent } from "@/lib/content";
@@ -10,6 +10,7 @@ import "../../globals.css";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ variable: "--font-brand", subsets: ["latin"], weight: ["500","700"] });
 
 export const metadata: Metadata = {
   title: "Client Business Name",
@@ -36,7 +37,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${spaceGrotesk.variable} antialiased`}>
         <Header content={content} />
         {children}
         <Footer content={content} />

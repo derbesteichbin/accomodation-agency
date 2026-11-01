@@ -31,7 +31,7 @@ export function Header({ content }: { content: SiteContent }) {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-cream/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href={`/${l}`} className="text-lg font-semibold tracking-tight text-bark">
+        <Link href={`/${l}`} className="font-brand text-lg font-semibold tracking-tight text-bark">
           {content.businessName}
         </Link>
 
